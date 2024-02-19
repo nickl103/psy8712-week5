@@ -12,5 +12,7 @@ Bnotes_tbl <- read_delim("../data/Bnotes.txt")
 Aclean_tbl <- Adata_tbl %>%
   separate("qs", into= paste0("q", 1:5)) %>%
   mutate(datadate =mdy_hms(datadate)) %>%
-  mutate(across(contains("q"), function(x) as.integer(x))) 
+  mutate(across(contains("q"), function(x) as.integer(x))) %>%
+  left_join(Anotes_tbl, by = "parnum") %>%
+  filter(is.na(notes))
   
