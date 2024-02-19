@@ -15,4 +15,10 @@ Aclean_tbl <- Adata_tbl %>%
   mutate(across(contains("q"), function(x) as.integer(x))) %>%
   left_join(Anotes_tbl, by = "parnum") %>%
   filter(is.na(notes))
-  
+ABclean_tbl <- Bdata_tbl %>%
+  mutate(datadate = mdy_hms(datadate)) %>%
+  mutate(across(contains("q"), function(x) as.integer(x))) %>%
+  left_join(Bnotes_tbl, by = "parnum") %>%
+  filter(is.na(notes)) %>%
+  bind_rows(Aclean_tbl, .id= "lab") %>%
+  select(-notes)
